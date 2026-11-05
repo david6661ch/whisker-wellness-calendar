@@ -18,8 +18,18 @@ export const Route = createFileRoute("/mascotas/$petId")({
           { name: "description", content: `Perfil, salud, vacunas y citas de ${loaderData.pet.name}.` },
           { property: "og:title", content: `${loaderData.pet.name} · PetCare` },
           { property: "og:description", content: `Perfil, salud, vacunas y citas de ${loaderData.pet.name}.` },
+          { property: "og:type", content: "website" },
+          { name: "twitter:card", content: "summary_large_image" },
         ]
-      : [{ title: "Mascota no encontrada · PetCare" }, { name: "robots", content: "noindex" }],
+      : [
+          { title: "Mascota no encontrada · PetCare" },
+          { name: "description", content: "La mascota solicitada no está disponible en PetCare." },
+          { property: "og:title", content: "Mascota no encontrada · PetCare" },
+          { property: "og:description", content: "La mascota solicitada no está disponible en PetCare." },
+          { property: "og:type", content: "website" },
+          { name: "twitter:card", content: "summary_large_image" },
+          { name: "robots", content: "noindex" },
+        ],
   }),
   notFoundComponent: () => (
     <div className="py-20 text-center"><p className="text-xl font-semibold">No encontramos esta mascota.</p><Link to="/mascotas" className="mt-4 inline-block text-primary underline">Volver</Link></div>

@@ -10,6 +10,8 @@ export const Route = createFileRoute("/mascotas/")({
       { name: "description", content: "Todas tus mascotas registradas y acceso rápido a sus perfiles." },
       { property: "og:title", content: "Mis mascotas · PetCare" },
       { property: "og:description", content: "Todas tus mascotas registradas en un solo lugar." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: PetsPage,
