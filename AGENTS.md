@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project conventions
+- Keep owner-advice content in a browser-safe typed catalog separate from its route so categories can grow without changing the page layout.
+- Expose owner advice through the shared header while preserving the existing primary and mobile navigation destinations.

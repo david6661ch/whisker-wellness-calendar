@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { LayoutDashboard, PawPrint, CalendarDays, Bell, Plus, Search } from "lucide-react";
+import { LayoutDashboard, PawPrint, CalendarDays, Bell, Plus, Search, BookOpen } from "lucide-react";
 import { pets } from "@/lib/petcare-data";
 
 const nav = [
@@ -56,6 +56,9 @@ export function AppShell({ children }: { children: ReactNode }) {
             <input placeholder="Buscar mascota, vacuna, cita…" className="w-full bg-transparent outline-none placeholder:text-muted-foreground" />
           </label>
           <div className="ml-auto flex items-center gap-2">
+            <Link to="/consejos" aria-label="Consejos para dueños" title="Consejos para dueños" className="flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-card px-3 text-sm font-semibold text-primary ring-1 ring-border hover:bg-secondary" activeProps={{ className: "!bg-secondary" }}>
+              <BookOpen className="size-5" aria-hidden="true" /><span className="hidden xl:inline">Consejos para dueños</span>
+            </Link>
             <Link to="/recordatorios" aria-label="Recordatorios" className="relative grid size-10 place-items-center rounded-full bg-card text-primary ring-1 ring-border">
               <Bell className="size-5" /><span className="absolute top-2 right-2.5 size-2 rounded-full bg-destructive" />
             </Link>
