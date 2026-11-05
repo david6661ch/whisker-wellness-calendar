@@ -12,6 +12,8 @@ export const Route = createFileRoute("/recordatorios")({
       { name: "description", content: "Vacunas, medicamentos, alimentación, higiene y actividades recurrentes de tus mascotas." },
       { property: "og:title", content: "Recordatorios · PetCare" },
       { property: "og:description", content: "Nunca olvides un cuidado de tus mascotas." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: RemindersPage,

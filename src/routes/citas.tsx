@@ -12,6 +12,8 @@ export const Route = createFileRoute("/citas")({
       { name: "description", content: "Organiza citas veterinarias, peluquería y otras visitas de tus mascotas." },
       { property: "og:title", content: "Citas y consultas · PetCare" },
       { property: "og:description", content: "Organiza las citas de tus mascotas." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: CitasPage,

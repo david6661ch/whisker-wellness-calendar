@@ -9,6 +9,8 @@ export const Route = createFileRoute("/mascotas/nueva")({
       { name: "description", content: "Crea el perfil de tu mascota en un minuto." },
       { property: "og:title", content: "Registrar mascota · PetCare" },
       { property: "og:description", content: "Crea el perfil de tu mascota en un minuto." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: NewPet,

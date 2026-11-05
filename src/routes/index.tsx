@@ -10,6 +10,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Resumen de tus mascotas, próximas citas, tareas pendientes y actividad reciente." },
       { property: "og:title", content: "Inicio · PetCare" },
       { property: "og:description", content: "Resumen de tus mascotas, próximas citas y tareas pendientes." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Dashboard,
