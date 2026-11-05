@@ -10,33 +10,102 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CitasRouteImport } from './routes/citas'
+import { Route as RecordatoriosRouteImport } from './routes/recordatorios'
+import { Route as MascotasIndexRouteImport } from './routes/mascotas.index'
+import { Route as MascotasPetIdRouteImport } from './routes/mascotas.$petId'
+import { Route as MascotasNuevaRouteImport } from './routes/mascotas.nueva'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CitasRoute = CitasRouteImport.update({
+  id: '/citas',
+  path: '/citas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecordatoriosRoute = RecordatoriosRouteImport.update({
+  id: '/recordatorios',
+  path: '/recordatorios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MascotasIndexRoute = MascotasIndexRouteImport.update({
+  id: '/mascotas/',
+  path: '/mascotas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MascotasPetIdRoute = MascotasPetIdRouteImport.update({
+  id: '/mascotas/$petId',
+  path: '/mascotas/$petId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MascotasNuevaRoute = MascotasNuevaRouteImport.update({
+  id: '/mascotas/nueva',
+  path: '/mascotas/nueva',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/citas': typeof CitasRoute
+  '/recordatorios': typeof RecordatoriosRoute
+  '/mascotas/$petId': typeof MascotasPetIdRoute
+  '/mascotas/nueva': typeof MascotasNuevaRoute
+  '/mascotas/': typeof MascotasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/citas': typeof CitasRoute
+  '/recordatorios': typeof RecordatoriosRoute
+  '/mascotas/$petId': typeof MascotasPetIdRoute
+  '/mascotas/nueva': typeof MascotasNuevaRoute
+  '/mascotas': typeof MascotasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/citas': typeof CitasRoute
+  '/recordatorios': typeof RecordatoriosRoute
+  '/mascotas/$petId': typeof MascotasPetIdRoute
+  '/mascotas/nueva': typeof MascotasNuevaRoute
+  '/mascotas/': typeof MascotasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/citas'
+    | '/recordatorios'
+    | '/mascotas/$petId'
+    | '/mascotas/nueva'
+    | '/mascotas/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/citas'
+    | '/recordatorios'
+    | '/mascotas/$petId'
+    | '/mascotas/nueva'
+    | '/mascotas'
+  id:
+    | '__root__'
+    | '/'
+    | '/citas'
+    | '/recordatorios'
+    | '/mascotas/$petId'
+    | '/mascotas/nueva'
+    | '/mascotas/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CitasRoute: typeof CitasRoute
+  RecordatoriosRoute: typeof RecordatoriosRoute
+  MascotasPetIdRoute: typeof MascotasPetIdRoute
+  MascotasNuevaRoute: typeof MascotasNuevaRoute
+  MascotasIndexRoute: typeof MascotasIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +117,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/citas': {
+      id: '/citas'
+      path: '/citas'
+      fullPath: '/citas'
+      preLoaderRoute: typeof CitasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recordatorios': {
+      id: '/recordatorios'
+      path: '/recordatorios'
+      fullPath: '/recordatorios'
+      preLoaderRoute: typeof RecordatoriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mascotas/': {
+      id: '/mascotas/'
+      path: '/mascotas'
+      fullPath: '/mascotas/'
+      preLoaderRoute: typeof MascotasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mascotas/$petId': {
+      id: '/mascotas/$petId'
+      path: '/mascotas/$petId'
+      fullPath: '/mascotas/$petId'
+      preLoaderRoute: typeof MascotasPetIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mascotas/nueva': {
+      id: '/mascotas/nueva'
+      path: '/mascotas/nueva'
+      fullPath: '/mascotas/nueva'
+      preLoaderRoute: typeof MascotasNuevaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CitasRoute: CitasRoute,
+  RecordatoriosRoute: RecordatoriosRoute,
+  MascotasPetIdRoute: MascotasPetIdRoute,
+  MascotasNuevaRoute: MascotasNuevaRoute,
+  MascotasIndexRoute: MascotasIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
