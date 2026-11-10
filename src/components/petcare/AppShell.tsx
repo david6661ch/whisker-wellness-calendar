@@ -39,8 +39,8 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
           <div className="mt-4 border-t border-sidebar-border pt-4">
             <p className="mb-2 px-3 text-xs font-bold tracking-wider text-muted-foreground uppercase">Experiencias</p>
-            <Link to="/recuerdos" className={linkCls} activeProps={{ className: activeCls }}><Images className="size-5" />Nuestros recuerdos</Link>
-            <Link to="/lugares" className={linkCls} activeProps={{ className: activeCls }}><MapPin className="size-5" />Lugares visitados</Link>
+            <Link to="/recuerdos" search={{ mascota: "" }} className={linkCls} activeProps={{ className: activeCls }}><Images className="size-5" />Nuestros recuerdos</Link>
+            <Link to="/lugares" search={{ mascota: "" }} className={linkCls} activeProps={{ className: activeCls }}><MapPin className="size-5" />Lugares visitados</Link>
             <Link to="/memoriam" className={linkCls} activeProps={{ className: activeCls }}><Heart className="size-5" />In Memoriam</Link>
           </div>
         </nav>
@@ -92,7 +92,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <n.icon className="size-5" />{n.label.replace("Mis ", "")}
           </Link>
         ))}
-        <Link to="/recuerdos" className="flex flex-col items-center gap-0.5 rounded-2xl py-2 text-[11px] font-semibold text-muted-foreground" activeProps={{ className: "!bg-secondary !text-primary" }}>
+        <Link to="/recuerdos" search={{ mascota: "" }} className="flex flex-col items-center gap-0.5 rounded-2xl py-2 text-[11px] font-semibold text-muted-foreground" activeProps={{ className: "!bg-secondary !text-primary" }}>
           <Images className="size-5" />Recuerdos
         </Link>
       </nav>

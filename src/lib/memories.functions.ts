@@ -27,7 +27,7 @@ export const listMemorials = createServerFn({ method: "GET" }).middleware([requi
   const { data, error } = await context.supabase.from("memorial_pets").select("id,linked_pet_id,name,species,breed,birth_date,death_date,bio,memories_text,dedication,photo_path,before_signup").order("death_date", { ascending: false }).order("id");
   if (error) throw new Error("No se pudieron cargar los memoriales.");
   const urls = await signPaths(context.supabase, data.map(m => m.photo_path));
-  return data.map(m => ({ ...m, photo_url: m.photo_path ? (urls[m.photo_path] ?? null) : null }));
+  return data.map(m => ({ id: m.id, ...memorialSchema.parse(m), photo_url: m.photo_path ? (urls[m.photo_path] ?? null) : null }));
 });
 export const saveMemorial = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator(memorialSchema.extend({ id: z.string().uuid().optional() })).handler(async ({ data, context }) => {
   const { id, ...values } = data;
@@ -68,7 +68,7 @@ export const listMemories = createServerFn({ method: "GET" }).middleware([requir
   const { data, error } = await context.supabase.from("memory_items").select("id,title,description,memory_date,media_type,media_path,favorite,album_id,pet_ids").order("memory_date", { ascending: false }).order("id");
   if (error) throw new Error("No se pudieron cargar los recuerdos.");
   const urls = await signPaths(context.supabase, data.map(m => m.media_path));
-  return data.map(m => ({ ...m, media_url: urls[m.media_path] ?? "" }));
+  return data.map(m => ({ id: m.id, ...memorySchema.parse(m), media_url: urls[m.media_path] ?? "" }));
 });
 export const saveMemory = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator(memorySchema.extend({ id: z.string().uuid().optional() })).handler(async ({ data, context }) => {
   const { id, ...values } = data;
@@ -94,7 +94,7 @@ export const listPlaces = createServerFn({ method: "GET" }).middleware([requireS
   const { data, error } = await context.supabase.from("visited_places").select("id,name,category,address,lat,lng,visit_date,pet_ids,description,photo_path,rating,review,pet_friendly,water_available,good_treatment,recommended").order("visit_date", { ascending: false }).order("id");
   if (error) throw new Error("No se pudieron cargar los lugares.");
   const urls = await signPaths(context.supabase, data.map(p => p.photo_path));
-  return data.map(p => ({ ...p, photo_url: p.photo_path ? (urls[p.photo_path] ?? null) : null }));
+  return data.map(p => ({ id: p.id, ...placeSchema.parse(p), photo_url: p.photo_path ? (urls[p.photo_path] ?? null) : null }));
 });
 export const savePlace = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth]).inputValidator(placeSchema.extend({ id: z.string().uuid().optional() })).handler(async ({ data, context }) => {
   const { id, ...values } = data;

@@ -101,7 +101,7 @@ export function placeStats(places: VisitedPlace[]) {
   return {
     total: places.length,
     cities: cities.size,
-    mostVisited: byName[0] && byName[0][1] > 1 ? { name: places.find(p => p.name.trim().toLocaleLowerCase() === byName[0][0])!.name, count: byName[0][1] } : null,
+    mostVisited: byName[0] && byName[0][1] > 1 ? { name: places.find(p => p.name.trim().toLocaleLowerCase() === byName[0]![0])!.name, count: byName[0]![1] } : null,
     topPet: topPet ? { id: topPet[0], count: topPet[1] } : null,
     categories: count(p => p.category),
   };

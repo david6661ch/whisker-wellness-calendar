@@ -161,7 +161,7 @@ function Places() {
             {results.length > 0 && (
               <ul className="divide-y divide-border rounded-lg border border-border bg-card text-sm font-normal">
                 {results.map((r, i) => (
-                  <li key={i}><button type="button" className="w-full px-3 py-2 text-left hover:bg-secondary" onClick={() => { update("lat", Number(r.lat)); update("lng", Number(r.lng)); if (!form.address) update("address", r.display_name.split(",").slice(0, 3).join(",").trim()); setFocus({ lat: Number(r.lat), lng: Number(r.lng) }); setResults([]); }}>{r.display_name}</button></li>
+                  <li key={i}><button type="button" className="w-full px-3 py-2 text-left hover:bg-secondary" onClick={() => { update("lat", Number(r.lat)); update("lng", Number(r.lon)); if (!form.address) update("address", r.display_name.split(",").slice(0, 3).join(",").trim()); setFocus({ lat: Number(r.lat), lng: Number(r.lon) }); setResults([]); }}>{r.display_name}</button></li>
                 ))}
               </ul>
             )}
