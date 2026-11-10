@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 import { useAccount } from "./AccountProvider";
 
 export const fieldClass = "min-h-11 w-full rounded-lg border border-input bg-card px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring";
-export function Field({ label, error, ...props }: InputHTMLAttributes<HTMLInputElement> & { label: string; error?: string }) {
+export function Field({ label, error, ...props }: InputHTMLAttributes<HTMLInputElement> & { label: string; error?: string | undefined }) {
   return <label className="grid gap-1.5 text-sm font-semibold">{label}<input {...props} className={fieldClass} aria-invalid={!!error} />{error && <span className="text-xs text-primary" role="alert">{error}</span>}</label>;
 }
 export function RecordsGate({ children }: { children: ReactNode }) {
@@ -16,9 +16,9 @@ export function RecordsGate({ children }: { children: ReactNode }) {
   return <RecordsError><Suspense fallback={<p className="py-12 text-center text-muted-foreground">Cargando registros…</p>}>{children}</Suspense></RecordsError>;
 }
 class RecordsError extends Component<{ children: ReactNode }, { failed: boolean }> {
-  state = { failed: false };
+  override state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }
-  render() { return this.state.failed ? <div role="alert" className="py-12 text-center"><p>No pudimos cargar tus registros.</p><Button className="mt-4" onClick={() => window.location.reload()}>Reintentar</Button></div> : this.props.children; }
+  override render() { return this.state.failed ? <div role="alert" className="py-12 text-center"><p>No pudimos cargar tus registros.</p><Button className="mt-4" onClick={() => window.location.reload()}>Reintentar</Button></div> : this.props.children; }
 }
 export function DeleteDialog({ name, busy, onCancel, onConfirm }: { name: string; busy: boolean; onCancel: () => void; onConfirm: () => void }) {
   return <Dialog open onOpenChange={open => { if (!open && !busy) onCancel(); }}><DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-md"><DialogTitle>¿Eliminar este registro?</DialogTitle><DialogDescription>Se eliminará «{name}». Esta acción no se puede deshacer.</DialogDescription><div className="flex justify-end gap-2"><Button variant="outline" disabled={busy} onClick={onCancel}>Cancelar</Button><Button disabled={busy} onClick={onConfirm}>{busy ? "Eliminando…" : "Eliminar"}</Button></div></DialogContent></Dialog>;
