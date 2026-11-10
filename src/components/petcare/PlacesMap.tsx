@@ -3,9 +3,10 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { VisitedPlace } from "@/lib/memories";
 
-export default function PlacesMap({ places, picking, onSelect, onPick }: {
+export default function PlacesMap({ places, picking, focus, onSelect, onPick }: {
   places: VisitedPlace[];
   picking?: boolean;
+  focus?: { lat: number; lng: number } | null;
   onSelect: (id: string) => void;
   onPick?: (lat: number, lng: number) => void;
 }) {

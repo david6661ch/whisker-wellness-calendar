@@ -15,6 +15,7 @@ import { Route as CitasRouteImport } from './routes/citas'
 import { Route as ConsejosRouteImport } from './routes/consejos'
 import { Route as ContactosRouteImport } from './routes/contactos'
 import { Route as GastosRouteImport } from './routes/gastos'
+import { Route as LugaresRouteImport } from './routes/lugares'
 import { Route as MemoriamRouteImport } from './routes/memoriam'
 import { Route as ProgresoRouteImport } from './routes/progreso'
 import { Route as RecordatoriosRouteImport } from './routes/recordatorios'
@@ -52,6 +53,11 @@ const ContactosRoute = ContactosRouteImport.update({
 const GastosRoute = GastosRouteImport.update({
   id: '/gastos',
   path: '/gastos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LugaresRoute = LugaresRouteImport.update({
+  id: '/lugares',
+  path: '/lugares',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MemoriamRoute = MemoriamRouteImport.update({
@@ -102,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/consejos': typeof ConsejosRoute
   '/contactos': typeof ContactosRoute
   '/gastos': typeof GastosRoute
+  '/lugares': typeof LugaresRoute
   '/memoriam': typeof MemoriamRouteWithChildren
   '/progreso': typeof ProgresoRoute
   '/recordatorios': typeof RecordatoriosRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/consejos': typeof ConsejosRoute
   '/contactos': typeof ContactosRoute
   '/gastos': typeof GastosRoute
+  '/lugares': typeof LugaresRoute
   '/memoriam': typeof MemoriamRouteWithChildren
   '/progreso': typeof ProgresoRoute
   '/recordatorios': typeof RecordatoriosRoute
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/consejos': typeof ConsejosRoute
   '/contactos': typeof ContactosRoute
   '/gastos': typeof GastosRoute
+  '/lugares': typeof LugaresRoute
   '/memoriam': typeof MemoriamRouteWithChildren
   '/progreso': typeof ProgresoRoute
   '/recordatorios': typeof RecordatoriosRoute
@@ -153,6 +162,7 @@ export interface FileRouteTypes {
     | '/consejos'
     | '/contactos'
     | '/gastos'
+    | '/lugares'
     | '/memoriam'
     | '/progreso'
     | '/recordatorios'
@@ -169,6 +179,7 @@ export interface FileRouteTypes {
     | '/consejos'
     | '/contactos'
     | '/gastos'
+    | '/lugares'
     | '/memoriam'
     | '/progreso'
     | '/recordatorios'
@@ -185,6 +196,7 @@ export interface FileRouteTypes {
     | '/consejos'
     | '/contactos'
     | '/gastos'
+    | '/lugares'
     | '/memoriam'
     | '/progreso'
     | '/recordatorios'
@@ -202,6 +214,7 @@ export interface RootRouteChildren {
   ConsejosRoute: typeof ConsejosRoute
   ContactosRoute: typeof ContactosRoute
   GastosRoute: typeof GastosRoute
+  LugaresRoute: typeof LugaresRoute
   MemoriamRoute: typeof MemoriamRouteWithChildren
   ProgresoRoute: typeof ProgresoRoute
   RecordatoriosRoute: typeof RecordatoriosRoute
@@ -253,6 +266,13 @@ declare module '@tanstack/react-router' {
       path: '/gastos'
       fullPath: '/gastos'
       preLoaderRoute: typeof GastosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lugares': {
+      id: '/lugares'
+      path: '/lugares'
+      fullPath: '/lugares'
+      preLoaderRoute: typeof LugaresRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/memoriam': {
@@ -333,6 +353,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConsejosRoute: ConsejosRoute,
   ContactosRoute: ContactosRoute,
   GastosRoute: GastosRoute,
+  LugaresRoute: LugaresRoute,
   MemoriamRoute: MemoriamRouteWithChildren,
   ProgresoRoute: ProgresoRoute,
   RecordatoriosRoute: RecordatoriosRoute,
