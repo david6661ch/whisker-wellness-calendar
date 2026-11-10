@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      care_events: {
+        Row: {
+          created_at: string
+          date: string
+          details: Json
+          id: string
+          kind: string
+          pet_id: string | null
+          points: number
+          source_key: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          details?: Json
+          id?: string
+          kind: string
+          pet_id?: string | null
+          points: number
+          source_key: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          details?: Json
+          id?: string
+          kind?: string
+          pet_id?: string | null
+          points?: number
+          source_key?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       emergency_contacts: {
         Row: {
           address: string
@@ -97,7 +136,22 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      record_care_event: {
+        Args: {
+          p_daily_points: number
+          p_daily_sources: string[]
+          p_date: string
+          p_details: Json
+          p_kind: string
+          p_pet: string
+          p_points: number
+          p_source: string
+          p_title: string
+          p_user: string
+          p_weekly_points: number
+        }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
