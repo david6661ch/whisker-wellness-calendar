@@ -4,6 +4,8 @@ import { ArrowLeft, Pencil, Info, Stethoscope, Syringe, CalendarDays, History, P
 import { cn } from "@/lib/utils";
 import { getPet, pets, vaccines, medicalVisits, appointments, reminders, activity } from "@/lib/petcare-data";
 import { SectionCard, Btn, Pill_, ReminderItem, AppointmentItem, Timeline } from "@/components/petcare/ui";
+import { CareAction } from "@/components/petcare/CareAction";
+import { ProgressPanel } from "@/components/petcare/ProgressPanel";
 
 export const Route = createFileRoute("/mascotas/$petId")({
   loader: ({ params }) => {
@@ -76,7 +78,7 @@ function PetProfile() {
             </div>
             <p className="mt-1 text-muted-foreground">{pet.breed} · {pet.age} · {pet.weight}</p>
           </div>
-          <Btn variant="soft"><Pencil className="size-4" />Editar perfil</Btn>
+          <CareAction kind="profile" petId={pet.id} title="Perfil revisado" label="Actualizar perfil" />
         </div>
       </header>
 
@@ -107,6 +109,7 @@ function PetProfile() {
           <Timeline items={activity.filter((e) => e.petId === pet.id)} showPet={false} />
         </SectionCard>
       )}
+      <ProgressPanel compact petId={pet.id} />
     </>
   );
 }
@@ -139,7 +142,7 @@ function Health({ petId }: { petId: string }) {
   const pet = getPet(petId)!;
   return (
     <div className="grid gap-6 lg:grid-cols-3">
-      <SectionCard className="lg:col-span-2" title="Visitas veterinarias" icon={<Stethoscope className="size-4" />} action={<Btn variant="ghost"><Plus className="size-4" />Registro</Btn>}>
+      <SectionCard className="lg:col-span-2" title="Visitas veterinarias" icon={<Stethoscope className="size-4" />} action={<CareAction kind="checkup" petId={petId} label="Registrar control" />}>
         <ul className="space-y-3">
           {(medicalVisits[petId] ?? []).map((v) => (
             <li key={v.date} className="rounded-2xl border border-border bg-background/60 p-4">
@@ -179,7 +182,7 @@ function Health({ petId }: { petId: string }) {
 function Vaccines({ petId }: { petId: string }) {
   const tone = { "al día": "ok", próxima: "warn", vencida: "danger" } as const;
   return (
-    <SectionCard title="Registro de vacunación" icon={<Syringe className="size-4" />} action={<Btn variant="ghost"><Plus className="size-4" />Vacuna</Btn>}>
+    <SectionCard title="Registro de vacunación" icon={<Syringe className="size-4" />} action={<CareAction kind="vaccine" petId={petId} label="Registrar vacuna aplicada" />}>
       <div className="overflow-x-auto">
         <table className="w-full min-w-[560px] text-left text-sm">
           <thead className="text-xs text-muted-foreground"><tr><th className="pb-3 font-semibold">Vacuna</th><th className="pb-3 font-semibold">Aplicada</th><th className="pb-3 font-semibold">Próxima dosis</th><th className="pb-3 font-semibold">Veterinario</th><th className="pb-3 font-semibold">Estado</th></tr></thead>

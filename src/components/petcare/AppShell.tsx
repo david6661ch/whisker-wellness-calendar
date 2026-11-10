@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { LayoutDashboard, PawPrint, CalendarDays, Bell, Plus, Search, BookOpen, Phone, Wallet, LogOut, UserRound } from "lucide-react";
+import { LayoutDashboard, PawPrint, CalendarDays, Bell, Plus, Search, BookOpen, Phone, Wallet, LogOut, UserRound, Award } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { useAccount } from "./AccountProvider";
@@ -35,6 +35,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="mt-4 border-t border-sidebar-border pt-4">
             <Link to="/contactos" className={linkCls} activeProps={{ className: activeCls }}><Phone className="size-5" />Emergencias</Link>
             <Link to="/gastos" className={linkCls} activeProps={{ className: activeCls }}><Wallet className="size-5" />Control de gastos</Link>
+            <Link to="/progreso" className={linkCls} activeProps={{ className: activeCls }}><Award className="size-5" />Mis logros</Link>
           </div>
         </nav>
         <div className="mt-8">

@@ -4,6 +4,7 @@ import { Plus, CalendarDays } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { appointments } from "@/lib/petcare-data";
 import { PageHeader, SectionCard, AppointmentItem, Btn } from "@/components/petcare/ui";
+import { CareAction } from "@/components/petcare/CareAction";
 
 export const Route = createFileRoute("/citas")({
   head: () => ({
@@ -28,7 +29,7 @@ function CitasPage() {
   const marked = new Set(appointments.map((a) => Number(a.day)));
   return (
     <>
-      <PageHeader title="Citas y consultas" subtitle="Veterinario, peluquería y otras visitas importantes." action={<Btn><Plus className="size-4" />Nueva cita</Btn>} />
+      <PageHeader title="Citas y consultas" subtitle="Veterinario, peluquería y otras visitas importantes." action={<CareAction kind="scheduled" label="Nueva cita" />} />
       <div className="grid gap-6 lg:grid-cols-3">
         <SectionCard className="lg:col-span-2" title="Próximas" icon={<CalendarDays className="size-4" />}>
           <div className="mb-4 flex flex-wrap gap-2">

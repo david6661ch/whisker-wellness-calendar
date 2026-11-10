@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PawPrint, CalendarDays, Bell, Syringe, Plus, ChevronRight, History } from "lucide-react";
 import { pets, appointments, reminders, activity } from "@/lib/petcare-data";
 import { PageHeader, SectionCard, StatTile, ReminderItem, AppointmentItem, Timeline, Pill_ } from "@/components/petcare/ui";
+import { ProgressPanel } from "@/components/petcare/ProgressPanel";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -51,6 +52,7 @@ function Dashboard() {
         ))}
       </section>
 
+      <ProgressPanel compact />
       <div className="grid gap-6 lg:grid-cols-5">
         <SectionCard className="lg:col-span-3" title="Cuidados pendientes" icon={<Bell className="size-4" />}
           action={<Link to="/recordatorios" className="text-sm font-semibold text-primary hover:underline">Ver todos</Link>}>
