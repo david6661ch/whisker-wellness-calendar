@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { getPet, pets, vaccines, medicalVisits, appointments, reminders, activity } from "@/lib/petcare-data";
 import { SectionCard, Btn, Pill_, ReminderItem, AppointmentItem, Timeline } from "@/components/petcare/ui";
 import { CareAction } from "@/components/petcare/CareAction";
+import { MemorialStatus } from "@/components/petcare/MemorialStatus";
 import { ProgressPanel } from "@/components/petcare/ProgressPanel";
 
 export const Route = createFileRoute("/mascotas/$petId")({
@@ -81,6 +82,8 @@ function PetProfile() {
           <CareAction kind="profile" petId={pet.id} title="Perfil revisado" label="Actualizar perfil" />
         </div>
       </header>
+
+      <MemorialStatus petId={pet.id} />
 
       <div role="tablist" className="mb-6 flex gap-1 overflow-x-auto rounded-full border border-border bg-card p-1">
         {tabs.map((t) => (
