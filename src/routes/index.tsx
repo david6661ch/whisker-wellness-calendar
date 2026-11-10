@@ -3,6 +3,8 @@ import { PawPrint, CalendarDays, Bell, Syringe, Plus, ChevronRight, History } fr
 import { pets, appointments, reminders, activity } from "@/lib/petcare-data";
 import { PageHeader, SectionCard, StatTile, ReminderItem, AppointmentItem, Timeline, Pill_ } from "@/components/petcare/ui";
 import { ProgressPanel } from "@/components/petcare/ProgressPanel";
+import { useProgress } from "@/components/petcare/ProgressProvider";
+import { localDay } from "@/lib/progress-rules";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -19,7 +21,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Dashboard() {
-  const pending = reminders.filter((r) => !r.done);
+  const { events } = useProgress();
+  const pending = reminders.filter(r => !events.some(e=>e.pet_id===r.petId && e.date===localDay() && e.kind===({Medicamento:"medication",Alimentación:"feeding",Actividad:"walk",Higiene:"hygiene",Vacuna:"vaccine"} as const)[r.category]));
   return (
     <>
       <PageHeader

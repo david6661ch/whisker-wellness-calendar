@@ -19,7 +19,7 @@ export const careSchema = z.object({
   if (v.kind === "vaccine" && (!v.nextDate || v.nextDate <= v.date || Number.isNaN(Date.parse(v.nextDate)) || new Date(v.nextDate).toISOString().slice(0,10) !== v.nextDate)) ctx.addIssue({ code: "custom", path: ["nextDate"], message: "Indica la próxima dosis según tu veterinario." });
 });
 export type CareInput = z.infer<typeof careSchema>;
-export type CareEvent = { id: string; pet_id: string | null; kind: string; title: string; points: number; date: string; created_at: string; details: unknown };
+export type CareEvent = { id: string; pet_id: string | null; kind: string; title: string; points: number; date: string; created_at: string; details: { notes: string; professional: string; nextDate: string; sourceId: string } };
 export const localDay = (date = new Date()) => new Intl.DateTimeFormat("en-CA", { timeZone: "America/Bogota", year: "numeric", month: "2-digit", day: "2-digit" }).format(date);
 export function levelProgress(total: number) {
   let index = 0; levels.forEach((l,i) => { if (total >= l.points) index = i; });
