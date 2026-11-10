@@ -18,6 +18,7 @@ import { Route as GastosRouteImport } from './routes/gastos'
 import { Route as MemoriamRouteImport } from './routes/memoriam'
 import { Route as ProgresoRouteImport } from './routes/progreso'
 import { Route as RecordatoriosRouteImport } from './routes/recordatorios'
+import { Route as RecuerdosRouteImport } from './routes/recuerdos'
 import { Route as MascotasIndexRouteImport } from './routes/mascotas.index'
 import { Route as MascotasPetIdRouteImport } from './routes/mascotas.$petId'
 import { Route as MascotasNuevaRouteImport } from './routes/mascotas.nueva'
@@ -68,6 +69,11 @@ const RecordatoriosRoute = RecordatoriosRouteImport.update({
   path: '/recordatorios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RecuerdosRoute = RecuerdosRouteImport.update({
+  id: '/recuerdos',
+  path: '/recuerdos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MascotasIndexRoute = MascotasIndexRouteImport.update({
   id: '/mascotas/',
   path: '/mascotas/',
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/memoriam': typeof MemoriamRouteWithChildren
   '/progreso': typeof ProgresoRoute
   '/recordatorios': typeof RecordatoriosRoute
+  '/recuerdos': typeof RecuerdosRoute
   '/mascotas/$petId': typeof MascotasPetIdRoute
   '/mascotas/nueva': typeof MascotasNuevaRoute
   '/memoriam/$memorialId': typeof MemoriamMemorialIdRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByTo {
   '/memoriam': typeof MemoriamRouteWithChildren
   '/progreso': typeof ProgresoRoute
   '/recordatorios': typeof RecordatoriosRoute
+  '/recuerdos': typeof RecuerdosRoute
   '/mascotas/$petId': typeof MascotasPetIdRoute
   '/mascotas/nueva': typeof MascotasNuevaRoute
   '/memoriam/$memorialId': typeof MemoriamMemorialIdRoute
@@ -130,6 +138,7 @@ export interface FileRoutesById {
   '/memoriam': typeof MemoriamRouteWithChildren
   '/progreso': typeof ProgresoRoute
   '/recordatorios': typeof RecordatoriosRoute
+  '/recuerdos': typeof RecuerdosRoute
   '/mascotas/$petId': typeof MascotasPetIdRoute
   '/mascotas/nueva': typeof MascotasNuevaRoute
   '/memoriam/$memorialId': typeof MemoriamMemorialIdRoute
@@ -147,6 +156,7 @@ export interface FileRouteTypes {
     | '/memoriam'
     | '/progreso'
     | '/recordatorios'
+    | '/recuerdos'
     | '/mascotas/$petId'
     | '/mascotas/nueva'
     | '/memoriam/$memorialId'
@@ -162,6 +172,7 @@ export interface FileRouteTypes {
     | '/memoriam'
     | '/progreso'
     | '/recordatorios'
+    | '/recuerdos'
     | '/mascotas/$petId'
     | '/mascotas/nueva'
     | '/memoriam/$memorialId'
@@ -177,6 +188,7 @@ export interface FileRouteTypes {
     | '/memoriam'
     | '/progreso'
     | '/recordatorios'
+    | '/recuerdos'
     | '/mascotas/$petId'
     | '/mascotas/nueva'
     | '/memoriam/$memorialId'
@@ -193,6 +205,7 @@ export interface RootRouteChildren {
   MemoriamRoute: typeof MemoriamRouteWithChildren
   ProgresoRoute: typeof ProgresoRoute
   RecordatoriosRoute: typeof RecordatoriosRoute
+  RecuerdosRoute: typeof RecuerdosRoute
   MascotasPetIdRoute: typeof MascotasPetIdRoute
   MascotasNuevaRoute: typeof MascotasNuevaRoute
   MascotasIndexRoute: typeof MascotasIndexRoute
@@ -263,6 +276,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RecordatoriosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/recuerdos': {
+      id: '/recuerdos'
+      path: '/recuerdos'
+      fullPath: '/recuerdos'
+      preLoaderRoute: typeof RecuerdosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mascotas/': {
       id: '/mascotas/'
       path: '/mascotas'
@@ -316,6 +336,7 @@ const rootRouteChildren: RootRouteChildren = {
   MemoriamRoute: MemoriamRouteWithChildren,
   ProgresoRoute: ProgresoRoute,
   RecordatoriosRoute: RecordatoriosRoute,
+  RecuerdosRoute: RecuerdosRoute,
   MascotasPetIdRoute: MascotasPetIdRoute,
   MascotasNuevaRoute: MascotasNuevaRoute,
   MascotasIndexRoute: MascotasIndexRoute,
