@@ -36,3 +36,5 @@ use the editor.
 - Keep the existing demo pet catalog as the source of pet identifiers for new records; do not migrate or alter the existing demo workflows as part of these additions.
 - Keep new record pages public with an inline sign-in state; private queries mount only after account hydration, and protected server functions always revalidate the bearer.
 - Compute expense totals in integer cents over paginated records so filters and summaries remain accurate beyond the Data API row limit.
+- Keep scoring, levels and badge conditions in browser-safe catalogs, with authenticated completion validation on the server and an atomic, service-only ledger RPC; clients cannot write points or bypass unique reward keys.
+- Do not import historical demo activity into the reward ledger; each new completed care record is explicit, owner-scoped and separate from the demo medical history.

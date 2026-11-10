@@ -15,6 +15,7 @@ import { Route as CitasRouteImport } from './routes/citas'
 import { Route as ConsejosRouteImport } from './routes/consejos'
 import { Route as ContactosRouteImport } from './routes/contactos'
 import { Route as GastosRouteImport } from './routes/gastos'
+import { Route as ProgresoRouteImport } from './routes/progreso'
 import { Route as RecordatoriosRouteImport } from './routes/recordatorios'
 import { Route as MascotasIndexRouteImport } from './routes/mascotas.index'
 import { Route as MascotasPetIdRouteImport } from './routes/mascotas.$petId'
@@ -50,6 +51,11 @@ const GastosRoute = GastosRouteImport.update({
   path: '/gastos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProgresoRoute = ProgresoRouteImport.update({
+  id: '/progreso',
+  path: '/progreso',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecordatoriosRoute = RecordatoriosRouteImport.update({
   id: '/recordatorios',
   path: '/recordatorios',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/consejos': typeof ConsejosRoute
   '/contactos': typeof ContactosRoute
   '/gastos': typeof GastosRoute
+  '/progreso': typeof ProgresoRoute
   '/recordatorios': typeof RecordatoriosRoute
   '/mascotas/$petId': typeof MascotasPetIdRoute
   '/mascotas/nueva': typeof MascotasNuevaRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/consejos': typeof ConsejosRoute
   '/contactos': typeof ContactosRoute
   '/gastos': typeof GastosRoute
+  '/progreso': typeof ProgresoRoute
   '/recordatorios': typeof RecordatoriosRoute
   '/mascotas/$petId': typeof MascotasPetIdRoute
   '/mascotas/nueva': typeof MascotasNuevaRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/consejos': typeof ConsejosRoute
   '/contactos': typeof ContactosRoute
   '/gastos': typeof GastosRoute
+  '/progreso': typeof ProgresoRoute
   '/recordatorios': typeof RecordatoriosRoute
   '/mascotas/$petId': typeof MascotasPetIdRoute
   '/mascotas/nueva': typeof MascotasNuevaRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/consejos'
     | '/contactos'
     | '/gastos'
+    | '/progreso'
     | '/recordatorios'
     | '/mascotas/$petId'
     | '/mascotas/nueva'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/consejos'
     | '/contactos'
     | '/gastos'
+    | '/progreso'
     | '/recordatorios'
     | '/mascotas/$petId'
     | '/mascotas/nueva'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/consejos'
     | '/contactos'
     | '/gastos'
+    | '/progreso'
     | '/recordatorios'
     | '/mascotas/$petId'
     | '/mascotas/nueva'
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   ConsejosRoute: typeof ConsejosRoute
   ContactosRoute: typeof ContactosRoute
   GastosRoute: typeof GastosRoute
+  ProgresoRoute: typeof ProgresoRoute
   RecordatoriosRoute: typeof RecordatoriosRoute
   MascotasPetIdRoute: typeof MascotasPetIdRoute
   MascotasNuevaRoute: typeof MascotasNuevaRoute
@@ -204,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GastosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/progreso': {
+      id: '/progreso'
+      path: '/progreso'
+      fullPath: '/progreso'
+      preLoaderRoute: typeof ProgresoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recordatorios': {
       id: '/recordatorios'
       path: '/recordatorios'
@@ -242,6 +262,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConsejosRoute: ConsejosRoute,
   ContactosRoute: ContactosRoute,
   GastosRoute: GastosRoute,
+  ProgresoRoute: ProgresoRoute,
   RecordatoriosRoute: RecordatoriosRoute,
   MascotasPetIdRoute: MascotasPetIdRoute,
   MascotasNuevaRoute: MascotasNuevaRoute,
