@@ -95,6 +95,131 @@ export type Database = {
         }
         Relationships: []
       }
+      memorial_pets: {
+        Row: {
+          before_signup: boolean
+          bio: string
+          birth_date: string | null
+          breed: string
+          created_at: string
+          death_date: string
+          dedication: string
+          id: string
+          linked_pet_id: string | null
+          memories_text: string
+          name: string
+          photo_path: string | null
+          species: string
+          user_id: string
+        }
+        Insert: {
+          before_signup?: boolean
+          bio?: string
+          birth_date?: string | null
+          breed?: string
+          created_at?: string
+          death_date: string
+          dedication?: string
+          id?: string
+          linked_pet_id?: string | null
+          memories_text?: string
+          name: string
+          photo_path?: string | null
+          species: string
+          user_id?: string
+        }
+        Update: {
+          before_signup?: boolean
+          bio?: string
+          birth_date?: string | null
+          breed?: string
+          created_at?: string
+          death_date?: string
+          dedication?: string
+          id?: string
+          linked_pet_id?: string | null
+          memories_text?: string
+          name?: string
+          photo_path?: string | null
+          species?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      memory_albums: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          id?: string
+          name: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      memory_items: {
+        Row: {
+          album_id: string | null
+          created_at: string
+          description: string
+          favorite: boolean
+          id: string
+          media_path: string
+          media_type: string
+          memory_date: string
+          pet_ids: string[]
+          title: string
+          user_id: string
+        }
+        Insert: {
+          album_id?: string | null
+          created_at?: string
+          description?: string
+          favorite?: boolean
+          id?: string
+          media_path: string
+          media_type?: string
+          memory_date: string
+          pet_ids?: string[]
+          title: string
+          user_id?: string
+        }
+        Update: {
+          album_id?: string | null
+          created_at?: string
+          description?: string
+          favorite?: boolean
+          id?: string
+          media_path?: string
+          media_type?: string
+          memory_date?: string
+          pet_ids?: string[]
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "memory_items_album_id_fkey"
+            columns: ["album_id"]
+            isOneToOne: false
+            referencedRelation: "memory_albums"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pet_expenses: {
         Row: {
           amount: number
@@ -128,6 +253,69 @@ export type Database = {
           notes?: string
           pet_id?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      visited_places: {
+        Row: {
+          address: string
+          category: string
+          created_at: string
+          description: string
+          good_treatment: boolean | null
+          id: string
+          lat: number
+          lng: number
+          name: string
+          pet_friendly: boolean | null
+          pet_ids: string[]
+          photo_path: string | null
+          rating: number | null
+          recommended: boolean | null
+          review: string
+          user_id: string
+          visit_date: string
+          water_available: boolean | null
+        }
+        Insert: {
+          address?: string
+          category?: string
+          created_at?: string
+          description?: string
+          good_treatment?: boolean | null
+          id?: string
+          lat: number
+          lng: number
+          name: string
+          pet_friendly?: boolean | null
+          pet_ids?: string[]
+          photo_path?: string | null
+          rating?: number | null
+          recommended?: boolean | null
+          review?: string
+          user_id?: string
+          visit_date: string
+          water_available?: boolean | null
+        }
+        Update: {
+          address?: string
+          category?: string
+          created_at?: string
+          description?: string
+          good_treatment?: boolean | null
+          id?: string
+          lat?: number
+          lng?: number
+          name?: string
+          pet_friendly?: boolean | null
+          pet_ids?: string[]
+          photo_path?: string | null
+          rating?: number | null
+          recommended?: boolean | null
+          review?: string
+          user_id?: string
+          visit_date?: string
+          water_available?: boolean | null
         }
         Relationships: []
       }
