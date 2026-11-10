@@ -52,6 +52,11 @@ export default function PlacesMap({ places, picking, focus, onSelect, onPick }: 
 
   useEffect(() => {
     const map = mapRef.current;
+    if (map && focus) map.flyTo([focus.lat, focus.lng], 15);
+  }, [focus]);
+
+  useEffect(() => {
+    const map = mapRef.current;
     if (!map) return;
     if (pickRef.current) { pickRef.current.remove(); pickRef.current = null; }
     map.getContainer().style.cursor = picking ? "crosshair" : "";

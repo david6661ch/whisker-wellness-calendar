@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { LayoutDashboard, PawPrint, CalendarDays, Bell, Plus, Search, BookOpen, Phone, Wallet, LogOut, UserRound, Award } from "lucide-react";
+import { LayoutDashboard, PawPrint, CalendarDays, Bell, Plus, Search, BookOpen, Phone, Wallet, LogOut, UserRound, Award, Images, MapPin, Heart } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { useAccount } from "./AccountProvider";
@@ -36,6 +36,12 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Link to="/contactos" className={linkCls} activeProps={{ className: activeCls }}><Phone className="size-5" />Emergencias</Link>
             <Link to="/gastos" className={linkCls} activeProps={{ className: activeCls }}><Wallet className="size-5" />Control de gastos</Link>
             <Link to="/progreso" className={linkCls} activeProps={{ className: activeCls }}><Award className="size-5" />Mis logros</Link>
+          </div>
+          <div className="mt-4 border-t border-sidebar-border pt-4">
+            <p className="mb-2 px-3 text-xs font-bold tracking-wider text-muted-foreground uppercase">Experiencias</p>
+            <Link to="/recuerdos" className={linkCls} activeProps={{ className: activeCls }}><Images className="size-5" />Nuestros recuerdos</Link>
+            <Link to="/lugares" className={linkCls} activeProps={{ className: activeCls }}><MapPin className="size-5" />Lugares visitados</Link>
+            <Link to="/memoriam" className={linkCls} activeProps={{ className: activeCls }}><Heart className="size-5" />In Memoriam</Link>
           </div>
         </nav>
         <div className="mt-8">
