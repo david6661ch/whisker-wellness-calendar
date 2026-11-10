@@ -86,12 +86,15 @@ export function AppShell({ children }: { children: ReactNode }) {
         <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 md:px-8 md:py-10">{children}</main>
       </div>
 
-      <nav aria-label="Navegación móvil" className="fixed inset-x-3 bottom-3 z-30 grid grid-cols-4 rounded-3xl border border-border bg-card/95 p-1.5 shadow-soft backdrop-blur lg:hidden">
+      <nav aria-label="Navegación móvil" className="fixed inset-x-3 bottom-3 z-30 grid grid-cols-5 rounded-3xl border border-border bg-card/95 p-1.5 shadow-soft backdrop-blur lg:hidden">
         {nav.map((n) => (
           <Link key={n.to} to={n.to} className="flex flex-col items-center gap-0.5 rounded-2xl py-2 text-[11px] font-semibold text-muted-foreground" activeProps={{ className: "!bg-secondary !text-primary" }} activeOptions={{ exact: n.to === "/" }}>
             <n.icon className="size-5" />{n.label.replace("Mis ", "")}
           </Link>
         ))}
+        <Link to="/recuerdos" className="flex flex-col items-center gap-0.5 rounded-2xl py-2 text-[11px] font-semibold text-muted-foreground" activeProps={{ className: "!bg-secondary !text-primary" }}>
+          <Images className="size-5" />Recuerdos
+        </Link>
       </nav>
     </div>
   );
