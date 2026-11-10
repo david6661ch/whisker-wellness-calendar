@@ -22,6 +22,13 @@
       "when": 1794274424729,
       "tag": "0002_restrict_reward_ledger_writes",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794287156672,
+      "tag": "0003_create_memories_sections",
+      "breakpoints": true
     }
   ]
 }
