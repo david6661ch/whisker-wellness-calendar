@@ -57,7 +57,8 @@ export function AppShell({ children }: { children: ReactNode }) {
             ))}
           </ul>
         </div>
-        <Link to="/mascotas/nueva" className="mt-auto flex items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-warm px-3 py-3 text-sm font-semibold text-primary hover:bg-sidebar-accent">
+        </div>
+        <Link to="/mascotas/nueva" className="mt-4 flex shrink-0 items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-warm px-3 py-3 text-sm font-semibold text-primary hover:bg-sidebar-accent">
           <Plus className="size-4" /> Añadir mascota
         </Link>
       </aside>
