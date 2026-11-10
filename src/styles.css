@@ -156,7 +156,7 @@
 
 @layer base {
   body { font-family: var(--font-sans); }
-  h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0; }
 }
 @utility card-soft {
   background: var(--card);
@@ -165,3 +165,8 @@
   box-shadow: var(--shadow-soft);
 }
 @utility bg-gradient-warm { background-image: var(--gradient-warm); }
+
+/* Provider branding is the only exception to the PetCare palette. */
+:root { --google-surface: #fff; --google-border: #747775; --google-text: #1f1f1f; }
+.google-auth-control { background: var(--google-surface); border-color: var(--google-border); color: var(--google-text); }
+.google-auth-control:hover { background: var(--google-surface); }

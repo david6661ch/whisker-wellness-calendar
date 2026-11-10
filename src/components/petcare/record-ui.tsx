@@ -12,7 +12,7 @@ export function Field({ label, error, ...props }: InputHTMLAttributes<HTMLInputE
 export function RecordsGate({ children }: { children: ReactNode }) {
   const { user, ready } = useAccount();
   if (!ready) return <p className="py-12 text-center text-muted-foreground">Cargando…</p>;
-  if (!user) return <section className="flex flex-col items-center gap-4 border-y border-border py-16 text-center"><LockKeyhole className="size-9 text-primary" /><h2 className="text-xl font-semibold">Tus registros, solo para ti</h2><p className="text-muted-foreground">Inicia sesión para consultar y guardar tus contactos y gastos.</p><Button asChild><Link to="/auth">Iniciar sesión</Link></Button></section>;
+  if (!user) return <section className="flex flex-col items-center gap-4 border-y border-border py-16 text-center"><LockKeyhole className="size-9 text-primary" /><h2 className="text-xl font-semibold">Tus registros, solo para ti</h2><p className="text-muted-foreground">Inicia sesión para consultar y guardar tus contactos y gastos.</p><Button asChild><Link to="/auth" onClick={() => sessionStorage.setItem("care-return", window.location.pathname)}>Iniciar sesión</Link></Button></section>;
   return <RecordsError><Suspense fallback={<p className="py-12 text-center text-muted-foreground">Cargando registros…</p>}>{children}</Suspense></RecordsError>;
 }
 class RecordsError extends Component<{ children: ReactNode }, { failed: boolean }> {

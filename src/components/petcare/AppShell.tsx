@@ -1,6 +1,10 @@
 import type { ReactNode } from "react";
-import { Link } from "@tanstack/react-router";
-import { LayoutDashboard, PawPrint, CalendarDays, Bell, Plus, Search, BookOpen } from "lucide-react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { LayoutDashboard, PawPrint, CalendarDays, Bell, Plus, Search, BookOpen, Phone, Wallet, LogOut, UserRound } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { useAccount } from "./AccountProvider";
+import { supabase } from "@/integrations/supabase/client";
 import { pets } from "@/lib/petcare-data";
 
 const nav = [
@@ -14,6 +18,7 @@ const linkCls = "flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-se
 const activeCls = "!bg-primary !text-primary-foreground shadow-soft";
 
 export function AppShell({ children }: { children: ReactNode }) {
+  const { user } = useAccount(); const cache = useQueryClient(); const navigate = useNavigate();
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[260px_1fr]">
       <aside className="sticky top-0 hidden h-screen flex-col border-r border-sidebar-border bg-sidebar p-5 lg:flex">
@@ -27,6 +32,10 @@ export function AppShell({ children }: { children: ReactNode }) {
               <n.icon className="size-5" />{n.label}
             </Link>
           ))}
+          <div className="mt-4 border-t border-sidebar-border pt-4">
+            <Link to="/contactos" className={linkCls} activeProps={{ className: activeCls }}><Phone className="size-5" />Emergencias</Link>
+            <Link to="/gastos" className={linkCls} activeProps={{ className: activeCls }}><Wallet className="size-5" />Control de gastos</Link>
+          </div>
         </nav>
         <div className="mt-8">
           <p className="mb-2 px-3 text-xs font-bold tracking-wider text-muted-foreground uppercase">Mis mascotas</p>
@@ -56,13 +65,15 @@ export function AppShell({ children }: { children: ReactNode }) {
             <input placeholder="Buscar mascota, vacuna, cita…" className="w-full bg-transparent outline-none placeholder:text-muted-foreground" />
           </label>
           <div className="ml-auto flex items-center gap-2">
+            <Button asChild variant="outline" size="icon" className="rounded-full lg:hidden" title="Contactos de emergencia"><Link to="/contactos" aria-label="Contactos de emergencia"><Phone /></Link></Button>
+            <Button asChild variant="outline" size="icon" className="rounded-full lg:hidden" title="Control de gastos"><Link to="/gastos" aria-label="Control de gastos"><Wallet /></Link></Button>
             <Link to="/consejos" aria-label="Consejos para dueños" title="Consejos para dueños" className="flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-card px-3 text-sm font-semibold text-primary ring-1 ring-border hover:bg-secondary" activeProps={{ className: "!bg-secondary" }}>
               <BookOpen className="size-5" aria-hidden="true" /><span className="hidden xl:inline">Consejos para dueños</span>
             </Link>
             <Link to="/recordatorios" aria-label="Recordatorios" className="relative grid size-10 place-items-center rounded-full bg-card text-primary ring-1 ring-border">
               <Bell className="size-5" /><span className="absolute top-2 right-2.5 size-2 rounded-full bg-destructive" />
             </Link>
-            <span className="grid size-10 place-items-center rounded-full bg-accent font-bold text-accent-foreground">VA</span>
+            {user ? <Button variant="outline" size="icon" className="rounded-full" aria-label="Cerrar sesión" title="Cerrar sesión" onClick={async () => { await cache.cancelQueries(); cache.clear(); await supabase.auth.signOut(); await navigate({ to: "/auth", replace: true }); }}><LogOut /></Button> : <Button asChild variant="outline" size="icon" className="rounded-full" title="Tu cuenta"><Link to="/auth" aria-label="Tu cuenta"><UserRound /></Link></Button>}
           </div>
         </header>
         <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 md:px-8 md:py-10">{children}</main>

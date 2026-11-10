@@ -32,3 +32,7 @@ use the editor.
 ## Project conventions
 - Keep owner-advice content in a browser-safe typed catalog separate from its route so categories can grow without changing the page layout.
 - Expose owner advice through the shared header while preserving the existing primary and mobile navigation destinations.
+- Store contacts and expenses as user-owned Cloud records; validate mutations with shared Zod schemas on both sides and enforce owner-only RLS to keep private records isolated.
+- Keep the existing demo pet catalog as the source of pet identifiers for new records; do not migrate or alter the existing demo workflows as part of these additions.
+- Keep new record pages public with an inline sign-in state; private queries mount only after account hydration, and protected server functions always revalidate the bearer.
+- Compute expense totals in integer cents over paginated records so filters and summaries remain accurate beyond the Data API row limit.
