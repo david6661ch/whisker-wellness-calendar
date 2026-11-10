@@ -1,0 +1,24 @@
+import { Link } from "@tanstack/react-router";
+import { Award, Flame, Heart, Footprints, Utensils, ClipboardCheck, LockKeyhole, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useAccount } from "./AccountProvider";
+import { useProgress } from "./ProgressProvider";
+import { CareAction } from "./CareAction";
+import { levelProgress,localDay,streak } from "@/lib/progress-rules";
+import { badges,badgeState } from "@/lib/progress-badges";
+import { pets,vaccines } from "@/lib/petcare-data";
+export function ProgressPanel({compact=false,petId}:{compact?:boolean;petId?:string}) {
+  const {user}=useAccount();const {events,loading,error,refresh}=useProgress();
+  const rows=petId?events.filter(e=>e.pet_id===petId):events; const total=events.reduce((n,e)=>n+e.points,0);const level=levelProgress(total);
+  const expected=Object.fromEntries(pets.filter(p=>!petId||p.id===petId).map(p=>[p.id,(vaccines[p.id]??[]).map(v=>v.name)]));const states=badges.map(b=>badgeState(b,rows,expected,localDay()));
+  const icons:Record<string,typeof Award>={Salud:Heart,Alimentación:Utensils,"Actividad física":Footprints,Constancia:Flame,Organización:ClipboardCheck};
+  return <section className="care-palette mb-6 border-y border-border py-6" aria-label="Mi progreso"><header className="mb-5 flex flex-wrap items-center justify-between gap-3"><h2 className="flex items-center gap-2 text-2xl font-semibold"><Award className="size-6 text-primary" />{petId?`Cuidados de ${pets.find(p=>p.id===petId)?.name}`:"Mi progreso"}</h2>{compact?<Button asChild variant="ghost"><Link to="/progreso">Mis logros<ChevronRight /></Link></Button>:<CareAction {...(petId?{petId}:{})} />}</header>
+    {!user&&<p className="mb-4 flex items-center gap-2 text-sm text-muted-foreground"><LockKeyhole className="size-4" /><Link to="/auth" className="underline">Inicia sesión</Link> para guardar tus logros.</p>}
+    {loading?<p>Cargando progreso…</p>:error?<div role="alert"><p>No se pudo cargar el progreso.</p><Button onClick={()=>refresh()} variant="outline">Reintentar</Button></div>:<>
+      <div className="grid gap-6 sm:grid-cols-[1fr_auto]"><div><p className="text-sm text-muted-foreground">Nivel {level.index} del cuidador</p><h3 className="mt-1 text-2xl font-semibold">{level.name}</h3><div className="mt-3 flex justify-between gap-2 text-sm"><span>{total} puntos totales</span><span>{level.remaining?`${level.remaining} para el siguiente nivel`:"Nivel máximo"}</span></div><progress className="mt-2 h-2.5 w-full" max={100} value={level.percent} aria-label="Progreso al siguiente nivel" /><p className="mt-2 text-xs text-muted-foreground">{level.next??"¡Gracias por tu dedicación!"}</p></div><div className="flex items-center gap-3"><Flame className="size-8 text-primary" /><div><p className="text-3xl font-semibold">{streak(rows,localDay())}</p><p className="text-sm text-muted-foreground">días de actividad</p>{petId&&<p className="text-xs">{rows.reduce((n,e)=>n+e.points,0)} puntos de esta mascota</p>}</div></div></div>
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">{(compact?[...states.filter(s=>s.unlocked),...states.filter(s=>!s.unlocked)].slice(0,4):states).map(b=>{const Icon=icons[b.category]??Award;return <article key={b.id} className={`rounded-lg border border-border bg-card p-4 ${b.unlocked?"":"opacity-60 grayscale"}`}><span className="mb-3 grid size-10 place-items-center rounded-full bg-secondary text-primary"><Icon className="size-5" /></span><p className="text-xs text-muted-foreground">{b.category}</p><h3 className="mt-1 text-base font-semibold">{b.name}</h3>{!compact&&<p className="mt-2 text-xs text-muted-foreground">{b.description}</p>}<p className="mt-3 text-xs font-semibold">{b.unlocked?`Obtenida · ${b.obtained}`:`${b.current} / ${b.target}`}</p></article>;})}</div>
+      {compact && rows.length>0 && <div className="mt-4 text-sm"><h3 className="font-semibold">Recompensas recientes</h3>{[...rows].reverse().slice(0,3).map(e=><p key={e.id} className="mt-2 flex justify-between gap-3"><span>{e.title}</span><span className="shrink-0">+{e.points} pts</span></p>)}</div>}
+      {!compact&&<section className="mt-8"><h3 className="mb-4 text-xl font-semibold">Historial de cuidados y recompensas</h3>{!rows.length?<p className="text-sm text-muted-foreground">Aún no hay cuidados realizados registrados.</p>:<ol className="divide-y divide-border">{[...rows].reverse().map(e=><li key={e.id} className="flex items-start justify-between gap-3 py-3"><div className="min-w-0"><p className="break-words font-semibold">{e.title}</p><p className="text-xs text-muted-foreground">{e.date} · {pets.find(p=>p.id===e.pet_id)?.name??"Todas las mascotas"}</p>{e.details.notes&&<p className="mt-1 whitespace-pre-wrap break-words text-sm">{e.details.notes}</p>}</div><span className="shrink-0 font-bold text-primary">+{e.points} pts</span></li>)}</ol>}</section>}
+    </>}
+  </section>;
+}

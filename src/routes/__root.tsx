@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import { AppShell } from "../components/petcare/AppShell";
 import { AccountProvider } from "../components/petcare/AccountProvider";
+import { ProgressProvider } from "../components/petcare/ProgressProvider";
 import { Toaster } from "../components/ui/sonner";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -126,9 +127,9 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <AccountProvider><AppShell>
+      <AccountProvider><ProgressProvider><AppShell>
         <Outlet />
-      </AppShell><Toaster /></AccountProvider>
+      </AppShell><Toaster /></ProgressProvider></AccountProvider>
     </QueryClientProvider>
   );
 }

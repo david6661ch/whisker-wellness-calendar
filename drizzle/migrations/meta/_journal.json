@@ -8,6 +8,20 @@
       "when": 1794273450227,
       "tag": "0000_petcare_contacts_expenses",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794274192472,
+      "tag": "0001_petcare_progress_ledger",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794274424729,
+      "tag": "0002_restrict_reward_ledger_writes",
+      "breakpoints": true
     }
   ]
 }

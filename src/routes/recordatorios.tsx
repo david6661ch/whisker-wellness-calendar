@@ -4,6 +4,8 @@ import { Plus, Bell, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { reminders, type ReminderCat } from "@/lib/petcare-data";
 import { PageHeader, SectionCard, ReminderItem, Btn } from "@/components/petcare/ui";
+import { useProgress } from "@/components/petcare/ProgressProvider";
+import { localDay } from "@/lib/progress-rules";
 
 export const Route = createFileRoute("/recordatorios")({
   head: () => ({
@@ -23,7 +25,8 @@ const cats: ("Todos" | ReminderCat)[] = ["Todos", "Vacuna", "Medicamento", "Alim
 
 function RemindersPage() {
   const [c, setC] = useState<(typeof cats)[number]>("Todos");
-  const list = reminders.filter((r) => c === "Todos" || r.category === c);
+  const { events } = useProgress();
+  const list = reminders.map(r => ({...r,done: events.some(e=>e.pet_id===r.petId && e.date===localDay() && e.kind===({Medicamento:"medication",Alimentación:"feeding",Actividad:"walk",Higiene:"hygiene",Vacuna:"vaccine"} as const)[r.category])})).filter((r) => c === "Todos" || r.category === c);
   return (
     <>
       <PageHeader title="Recordatorios" subtitle="Tus responsabilidades de un vistazo." action={<Btn><Plus className="size-4" />Nuevo recordatorio</Btn>} />

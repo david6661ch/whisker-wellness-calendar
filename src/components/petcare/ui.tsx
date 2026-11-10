@@ -3,6 +3,9 @@ import { Link } from "@tanstack/react-router";
 import { Bell, Calendar, Pill, Syringe, Utensils, Sparkles, Footprints, Check, Clock, MapPin, Stethoscope, Scissors, Scale, StickyNote } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getPet, type Appointment, type Reminder, type Activity, type Pet } from "@/lib/petcare-data";
+import { CareAction } from "./CareAction";
+import { useProgress } from "./ProgressProvider";
+import { localDay } from "@/lib/progress-rules";
 
 export function PageHeader({ title, subtitle, action }: { title: string; subtitle?: string; action?: ReactNode }) {
   return (
@@ -63,7 +66,10 @@ const reminderIcon: Record<string, typeof Bell> = { Vacuna: Syringe, Medicamento
 
 export function ReminderItem({ r, showPet = true }: { r: Reminder; showPet?: boolean }) {
   const Icon = reminderIcon[r.category] ?? Bell;
-  const pet = getPet(r.petId)!;
+  const pet = getPet(r.petId);
+  const { events } = useProgress();
+  const completed = events.some(e => e.date === localDay() && (e.details as {sourceId?:string}|null)?.sourceId === `reminder:${r.id}`);
+  if (!pet) return null;
   return (
     <li className={cn("flex items-center gap-3 rounded-2xl border border-border bg-background/60 p-3", r.done && "opacity-60")}>
       <span className={cn("grid size-10 shrink-0 place-items-center rounded-xl", r.urgent ? "bg-primary text-primary-foreground" : "bg-secondary text-primary")}>
@@ -76,9 +82,7 @@ export function ReminderItem({ r, showPet = true }: { r: Reminder; showPet?: boo
           <span>{showPet && `${pet.name} · `}{r.when} · {r.repeat}</span>
         </p>
       </div>
-      <button aria-label={r.done ? "Completado" : "Marcar como hecho"} className={cn("grid size-8 shrink-0 place-items-center rounded-full border-2 transition-colors", r.done ? "border-success bg-success text-primary-foreground" : "border-border hover:border-primary")}>
-        {r.done && <Check className="size-4" />}
-      </button>
+      <CareAction iconOnly kind={({Vacuna:"vaccine",Medicamento:"medication",Alimentación:"feeding",Higiene:"hygiene",Actividad:"walk"} as const)[r.category]} petId={r.petId} sourceId={`reminder:${r.id}`} title={r.title} disabled={completed} label={`Marcar como hecho: ${r.title}`} />
     </li>
   );
 }
@@ -86,7 +90,8 @@ export function ReminderItem({ r, showPet = true }: { r: Reminder; showPet?: boo
 const apptIcon = { Veterinario: Stethoscope, Peluquería: Scissors, Otro: Calendar };
 
 export function AppointmentItem({ a, showPet = true }: { a: Appointment; showPet?: boolean }) {
-  const pet = getPet(a.petId)!;
+  const pet = getPet(a.petId);
+  if (!pet) return null;
   const Icon = apptIcon[a.type];
   return (
     <li className="flex items-center gap-4 rounded-2xl border border-border bg-background/60 p-3">
@@ -104,6 +109,7 @@ export function AppointmentItem({ a, showPet = true }: { a: Appointment; showPet
       {showPet && (
         <Link to="/mascotas/$petId" params={{ petId: pet.id }} className="shrink-0"><PetAvatar pet={pet} size="sm" /></Link>
       )}
+      {a.type === "Veterinario" && <CareAction iconOnly kind="appointment" petId={a.petId} sourceId={`appointment:${a.id}`} title={a.title} label={`Registrar asistencia: ${a.title}`} />}
     </li>
   );
 }
