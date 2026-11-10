@@ -11,3 +11,7 @@
 - [x] Crear niveles, insignias, rachas y panel general y por mascota.
 - [x] Verificar reglas, navegación y presentación en computador y celular.
 - [ ] Verificar registro y recompensas con sesión real: no hay cuentas registradas para iniciar sesión.
+- [ ] In Memoriam: registro, perfil conmemorativo y enlace desde perfiles.
+- [ ] Nuestros recuerdos: galería privada con álbumes, filtros y favoritos.
+- [ ] Lugares visitados: mapa interactivo, reseñas personales y estadísticas.
+- [ ] Verificar las tres secciones con sesión real: pendiente de una cuenta registrada.
