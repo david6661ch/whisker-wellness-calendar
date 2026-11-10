@@ -33,7 +33,7 @@ function RemindersPage() {
   const { user } = useAccount();
   const loadMemorials = useServerFn(listMemorials);
   const { data: memorials } = useQuery({ queryKey: ["memorials", user?.id], queryFn: () => loadMemorials(), enabled: !!user });
-  const deceased = new Set((memorials ?? []).map(m => m.linked_pet_id).filter((x): x is string => !!x));
+  const deceased = new Set<string>((memorials ?? []).map(m => m.linked_pet_id).filter(x => x != null));
   const list = reminders.filter(r => !deceased.has(r.petId)).map(r => ({...r,done: events.some(e=>e.pet_id===r.petId && e.date===localDay() && e.kind===({Medicamento:"medication",Alimentación:"feeding",Actividad:"walk",Higiene:"hygiene",Vacuna:"vaccine"} as const)[r.category])})).filter((r) => c === "Todos" || r.category === c);
   return (
     <>

@@ -42,7 +42,7 @@ function Gallery() {
   const { data: albums } = useSuspenseQuery({ queryKey: ["albums", user?.id], queryFn: () => fns.albums() });
   const { data: memorials } = useSuspenseQuery({ queryKey: ["memorials", user?.id], queryFn: () => fns.memorials() });
   const options = petOptions(memorials);
-  const deceasedIds = useMemo(() => new Set([...memorials.map(m => m.id), ...memorials.map(m => m.linked_pet_id).filter((x): x is string => !!x)]), [memorials]);
+  const deceasedIds = useMemo(() => new Set<string>([...memorials.map(m => m.id), ...memorials.map(m => m.linked_pet_id).filter(x => x != null)]), [memorials]);
 
   const [type, setType] = useState<"" | "photo" | "video">("");
   const [onlyFav, setOnlyFav] = useState(false);
