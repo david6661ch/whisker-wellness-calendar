@@ -56,7 +56,7 @@ describe("placeStats", () => {
   it("cuenta lugares, ciudades, el más visitado y la mascota con más experiencias sin convertirlo en competición", () => {
     const stats = placeStats([
       place({ id: "1" }),
-      place({ id: "2", address: "Calle 2, Medellín", pet_ids: ["milo"] }),
+      place({ id: "2", name: "Café Andino", address: "Calle 2, Medellín", pet_ids: ["milo"] }),
       place({ id: "3", pet_ids: ["milo"] }),
     ]);
     expect(stats.total).toBe(3);
