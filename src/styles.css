@@ -187,3 +187,7 @@
 .care-palette .card-soft > div { min-width: 0; }
 .care-palette .card-soft .font-display { font-size: 1.25rem; overflow-wrap: anywhere; }
 @media (prefers-reduced-motion: reduce) { .care-palette * { animation: none; transition: none; } }
+.care-palette progress { accent-color: var(--primary); border-radius: 999px; overflow: hidden; }
+.care-palette progress::-webkit-progress-bar { background: var(--secondary); }
+.care-palette progress::-webkit-progress-value { background: var(--primary); }
+.care-palette progress::-moz-progress-bar { background: var(--primary); }
