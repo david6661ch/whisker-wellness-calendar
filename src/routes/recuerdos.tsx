@@ -26,7 +26,7 @@ function MemoriesPage() {
     <div className="care-palette">
       <PageHeader title="Nuestros recuerdos" subtitle="Cada foto y cada video cuenta un pedazo de su historia." />
       <ExperienciasNav />
-      <RecordsGate><Gallery /></RecordsGate>
+      <RecordsGate what="conservar tus fotografías, videos y álbumes"><Gallery /></RecordsGate>
     </div>
   );
 }

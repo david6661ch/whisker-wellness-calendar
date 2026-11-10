@@ -22,7 +22,7 @@ function MemoriamPage() {
     <div className="care-palette">
       <PageHeader title="In Memoriam" subtitle="Un rincón tranquilo para quienes siempre serán parte de la familia." />
       <ExperienciasNav />
-      <RecordsGate><Memorials /></RecordsGate>
+      <RecordsGate what="crear y cuidar los memoriales de tus mascotas"><Memorials /></RecordsGate>
     </div>
   );
 }

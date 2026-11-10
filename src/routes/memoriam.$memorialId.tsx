@@ -15,7 +15,7 @@ function MemorialPage() {
   return (
     <div className="care-palette">
       <ExperienciasNav />
-      <RecordsGate><Detail /></RecordsGate>
+      <RecordsGate what="crear y cuidar los memoriales de tus mascotas"><Detail /></RecordsGate>
     </div>
   );
 }

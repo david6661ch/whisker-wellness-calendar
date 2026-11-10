@@ -27,7 +27,7 @@ function PlacesPage() {
     <div className="care-palette">
       <PageHeader title="Lugares que hemos visitado" subtitle="Un mapa con la historia de sus aventuras juntos." />
       <ExperienciasNav />
-      <RecordsGate><Places /></RecordsGate>
+      <RecordsGate what="registrar los lugares que visitas con tus mascotas"><Places /></RecordsGate>
     </div>
   );
 }
