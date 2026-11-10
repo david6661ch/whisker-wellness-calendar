@@ -10,8 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CitasRouteImport } from './routes/citas'
 import { Route as ConsejosRouteImport } from './routes/consejos'
+import { Route as ContactosRouteImport } from './routes/contactos'
+import { Route as GastosRouteImport } from './routes/gastos'
 import { Route as RecordatoriosRouteImport } from './routes/recordatorios'
 import { Route as MascotasIndexRouteImport } from './routes/mascotas.index'
 import { Route as MascotasPetIdRouteImport } from './routes/mascotas.$petId'
@@ -22,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CitasRoute = CitasRouteImport.update({
   id: '/citas',
   path: '/citas',
@@ -30,6 +38,16 @@ const CitasRoute = CitasRouteImport.update({
 const ConsejosRoute = ConsejosRouteImport.update({
   id: '/consejos',
   path: '/consejos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactosRoute = ContactosRouteImport.update({
+  id: '/contactos',
+  path: '/contactos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GastosRoute = GastosRouteImport.update({
+  id: '/gastos',
+  path: '/gastos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RecordatoriosRoute = RecordatoriosRouteImport.update({
@@ -55,8 +73,11 @@ const MascotasNuevaRoute = MascotasNuevaRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/citas': typeof CitasRoute
   '/consejos': typeof ConsejosRoute
+  '/contactos': typeof ContactosRoute
+  '/gastos': typeof GastosRoute
   '/recordatorios': typeof RecordatoriosRoute
   '/mascotas/$petId': typeof MascotasPetIdRoute
   '/mascotas/nueva': typeof MascotasNuevaRoute
@@ -64,8 +85,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/citas': typeof CitasRoute
   '/consejos': typeof ConsejosRoute
+  '/contactos': typeof ContactosRoute
+  '/gastos': typeof GastosRoute
   '/recordatorios': typeof RecordatoriosRoute
   '/mascotas/$petId': typeof MascotasPetIdRoute
   '/mascotas/nueva': typeof MascotasNuevaRoute
@@ -74,8 +98,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/citas': typeof CitasRoute
   '/consejos': typeof ConsejosRoute
+  '/contactos': typeof ContactosRoute
+  '/gastos': typeof GastosRoute
   '/recordatorios': typeof RecordatoriosRoute
   '/mascotas/$petId': typeof MascotasPetIdRoute
   '/mascotas/nueva': typeof MascotasNuevaRoute
@@ -85,8 +112,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/citas'
     | '/consejos'
+    | '/contactos'
+    | '/gastos'
     | '/recordatorios'
     | '/mascotas/$petId'
     | '/mascotas/nueva'
@@ -94,8 +124,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/citas'
     | '/consejos'
+    | '/contactos'
+    | '/gastos'
     | '/recordatorios'
     | '/mascotas/$petId'
     | '/mascotas/nueva'
@@ -103,8 +136,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/auth'
     | '/citas'
     | '/consejos'
+    | '/contactos'
+    | '/gastos'
     | '/recordatorios'
     | '/mascotas/$petId'
     | '/mascotas/nueva'
@@ -113,8 +149,11 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   CitasRoute: typeof CitasRoute
   ConsejosRoute: typeof ConsejosRoute
+  ContactosRoute: typeof ContactosRoute
+  GastosRoute: typeof GastosRoute
   RecordatoriosRoute: typeof RecordatoriosRoute
   MascotasPetIdRoute: typeof MascotasPetIdRoute
   MascotasNuevaRoute: typeof MascotasNuevaRoute
@@ -130,6 +169,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/citas': {
       id: '/citas'
       path: '/citas'
@@ -142,6 +188,20 @@ declare module '@tanstack/react-router' {
       path: '/consejos'
       fullPath: '/consejos'
       preLoaderRoute: typeof ConsejosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contactos': {
+      id: '/contactos'
+      path: '/contactos'
+      fullPath: '/contactos'
+      preLoaderRoute: typeof ContactosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gastos': {
+      id: '/gastos'
+      path: '/gastos'
+      fullPath: '/gastos'
+      preLoaderRoute: typeof GastosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recordatorios': {
@@ -177,8 +237,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   CitasRoute: CitasRoute,
   ConsejosRoute: ConsejosRoute,
+  ContactosRoute: ContactosRoute,
+  GastosRoute: GastosRoute,
   RecordatoriosRoute: RecordatoriosRoute,
   MascotasPetIdRoute: MascotasPetIdRoute,
   MascotasNuevaRoute: MascotasNuevaRoute,

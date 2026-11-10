@@ -156,7 +156,7 @@
 
 @layer base {
   body { font-family: var(--font-sans); }
-  h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0; }
 }
 @utility card-soft {
   background: var(--card);
@@ -165,3 +165,25 @@
   box-shadow: var(--shadow-soft);
 }
 @utility bg-gradient-warm { background-image: var(--gradient-warm); }
+
+/* Provider branding is the only exception to the PetCare palette. */
+:root { --google-surface: #fff; --google-border: #747775; --google-text: #1f1f1f; }
+.google-auth-control { background: var(--google-surface); border-color: var(--google-border); color: var(--google-text); }
+.google-auth-control:hover { background: var(--google-surface); }
+.care-palette {
+  --background: #ede0d4;
+  --card: #ede0d4;
+  --foreground: #7f5539;
+  --primary: #7f5539;
+  --primary-foreground: #ede0d4;
+  --secondary: #e6ccb2;
+  --secondary-foreground: #7f5539;
+  --accent: #ddb892;
+  --muted-foreground: #9c6644;
+  --border: #b08968;
+  --input: #b08968;
+  --ring: #9c6644;
+}
+.care-palette .card-soft > div { min-width: 0; }
+.care-palette .card-soft .font-display { font-size: 1.25rem; overflow-wrap: anywhere; }
+@media (prefers-reduced-motion: reduce) { .care-palette * { animation: none; transition: none; } }
