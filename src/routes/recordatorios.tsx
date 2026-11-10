@@ -5,6 +5,10 @@ import { cn } from "@/lib/utils";
 import { reminders, type ReminderCat } from "@/lib/petcare-data";
 import { PageHeader, SectionCard, ReminderItem, Btn } from "@/components/petcare/ui";
 import { useProgress } from "@/components/petcare/ProgressProvider";
+import { useAccount } from "@/components/petcare/AccountProvider";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { listMemorials } from "@/lib/memories.functions";
 import { localDay } from "@/lib/progress-rules";
 
 export const Route = createFileRoute("/recordatorios")({
