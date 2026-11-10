@@ -1,0 +1,54 @@
+import { useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { Plus, Wallet, CalendarDays, ChartNoAxesCombined, Pencil, Trash2, X } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { PageHeader, StatTile } from "@/components/petcare/ui";
+import { RecordsGate, Field, fieldClass, DeleteDialog } from "@/components/petcare/record-ui";
+import { useAccount } from "@/components/petcare/AccountProvider";
+import { categories, expenseSchema, money, filterExpenses, expenseSummary, type Expense, type ExpenseInput } from "@/lib/care-records";
+import { listExpenses, saveExpense, deleteExpense } from "@/lib/care-records.functions";
+import { pets } from "@/lib/petcare-data";
+
+export const Route = createFileRoute("/gastos")({ head: () => ({ meta: [{ title: "Control de gastos · PetCare" }, { name: "description", content: "Registra los gastos de tus mascotas y consulta totales e historial por categoría y período." }, { property: "og:title", content: "Control de gastos · PetCare" }, { property: "og:description", content: "Organiza los gastos individuales y de todas tus mascotas." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }), component: ExpensesPage });
+function ExpensesPage() { return <><PageHeader title="Control de gastos" subtitle="Cada cuidado cuenta." /><RecordsGate><Expenses /></RecordsGate></>; }
+function Expenses() {
+  const { user } = useAccount(); const cache = useQueryClient(); const load = useServerFn(listExpenses); const save = useServerFn(saveExpense); const remove = useServerFn(deleteExpense);
+  const key = ["expenses", user?.id]; const { data } = useSuspenseQuery({ queryKey: key, queryFn: () => load() });
+  const today = new Date(); const date = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`; const month = date.slice(0,7);
+  const initial: ExpenseInput = { description: "", category: "Alimentación", pet_id: "luna", amount: 0, date, notes: "" };
+  const [filters, setFilters] = useState({ pet: "", category: "", from: "", to: "" }); const [editing, setEditing] = useState<Expense | "new" | null>(null); const [deleting, setDeleting] = useState<Expense | null>(null); const [busy, setBusy] = useState(false);
+  const [form, setForm] = useState<ExpenseInput>(initial); const [errors, setErrors] = useState<Record<string,string>>({});
+  const update = <K extends keyof ExpenseInput>(k: K, value: ExpenseInput[K]) => setForm(f => ({ ...f, [k]: value }));
+  const rows = filterExpenses(data, filters); const allSummary = expenseSummary(filterExpenses(data, { ...filters, from: "", to: "" }), month); const summary = expenseSummary(rows, month);
+  const open = (expense?: Expense) => { setEditing(expense ?? "new"); setForm(expense ?? initial); setErrors({}); };
+  const invalidPeriod = !!filters.from && !!filters.to && filters.from > filters.to;
+  return <>
+    <div className="mb-6 flex flex-wrap justify-between gap-3"><p className="text-sm text-muted-foreground">Pesos colombianos (COP)</p><Button className="rounded-full" onClick={() => open()}><Plus />Registrar gasto</Button></div>
+    <div className="mb-6 grid gap-4 sm:grid-cols-3"><StatTile label="Este mes · mascota y categoría" value={money(allSummary.monthly)} icon={<CalendarDays className="size-5" />} /><StatTile label="Acumulado · mascota y categoría" value={money(allSummary.total)} icon={<Wallet className="size-5" />} /><StatTile label="Período filtrado" value={money(summary.total)} icon={<ChartNoAxesCombined className="size-5" />} /></div>
+    <div className="mb-6 grid items-end gap-3 sm:grid-cols-2 xl:grid-cols-[1fr_1fr_1fr_1fr_auto]">
+      <label className="grid gap-1.5 text-sm font-semibold">Mascota<select className={fieldClass} value={filters.pet} onChange={e => setFilters(f => ({ ...f, pet: e.target.value }))}><option value="">Todas mis mascotas</option>{pets.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}</select></label>
+      <label className="grid gap-1.5 text-sm font-semibold">Categoría<select className={fieldClass} value={filters.category} onChange={e => setFilters(f => ({ ...f, category: e.target.value }))}><option value="">Todas las categorías</option>{categories.map(c => <option key={c}>{c}</option>)}</select></label>
+      <Field label="Desde" type="date" value={filters.from} onChange={e => setFilters(f => ({ ...f, from: e.target.value }))} /><Field label="Hasta" type="date" min={filters.from} value={filters.to} onChange={e => setFilters(f => ({ ...f, to: e.target.value }))} />
+      <Button variant="outline" size="icon" className="size-11" title="Limpiar filtros" aria-label="Limpiar filtros" onClick={() => setFilters({ pet: "", category: "", from: "", to: "" })}><X /></Button>
+    </div>{invalidPeriod && <p className="mb-4 text-sm text-primary" role="alert">La fecha final debe ser igual o posterior a la inicial.</p>}
+    <section className="mb-8 border-y border-border py-6"><h2 className="mb-4 text-xl font-semibold">Gastos por categoría</h2>{summary.categories.length ? <div className="h-72 w-full" role="img" aria-label={summary.categories.map(c => `${c.category}: ${money(c.total)}`).join(", ")}><ResponsiveContainer width="100%" height="100%"><BarChart data={summary.categories} layout="vertical" margin={{ top: 0, right: 20, bottom: 0, left: 0 }}><XAxis type="number" hide /><YAxis type="category" dataKey="category" width={105} tick={{ fill: "var(--foreground)", fontSize: 12 }} axisLine={false} tickLine={false} /><Tooltip formatter={value => money(Number(value))} contentStyle={{ background: "var(--card)", borderColor: "var(--border)", color: "var(--foreground)" }} cursor={{ fill: "var(--secondary)" }} /><Bar dataKey="total" name="Gasto" fill="var(--primary)" radius={[0,4,4,0]} maxBarSize={28} /></BarChart></ResponsiveContainer></div> : <p className="py-8 text-center text-muted-foreground">Sin gastos en este período.</p>}</section>
+    <section><div className="mb-4 flex items-center justify-between"><h2 className="text-xl font-semibold">Historial de gastos</h2><span className="text-sm text-muted-foreground">{rows.length} registros</span></div>
+      {!rows.length && <div className="border-y border-border py-12 text-center"><Wallet className="mx-auto mb-3 size-8 text-primary" /><h3 className="text-lg">{data.length ? "No hay gastos con estos filtros" : "Aún no has registrado gastos"}</h3></div>}
+      <ul className="space-y-3">{rows.map(r => <li key={r.id} className="card-soft flex flex-wrap items-center gap-3 p-4"><img src={pets.find(p => p.id === r.pet_id)?.photo} alt="" className="size-11 rounded-full object-cover" /><div className="min-w-0 flex-1"><h3 className="break-words font-semibold">{r.description}</h3><p className="text-xs text-muted-foreground">{pets.find(p => p.id === r.pet_id)?.name} · {r.category} · {new Intl.DateTimeFormat("es-CO", { dateStyle: "medium" }).format(new Date(r.date + "T12:00:00"))}</p>{r.notes && <p className="mt-1 whitespace-pre-wrap break-words text-sm text-muted-foreground">{r.notes}</p>}</div><p className="text-lg font-bold text-primary">{money(r.amount)}</p><div className="flex"><Button variant="ghost" size="icon" title="Editar gasto" aria-label={`Editar ${r.description}`} onClick={() => open(r)}><Pencil /></Button><Button variant="ghost" size="icon" title="Eliminar gasto" aria-label={`Eliminar ${r.description}`} onClick={() => setDeleting(r)}><Trash2 /></Button></div></li>)}</ul>
+    </section>
+    <Dialog open={editing !== null} onOpenChange={o => { if (!o && !busy) setEditing(null); }}><DialogContent className="max-h-[90dvh] max-w-[calc(100%-2rem)] overflow-y-auto sm:max-w-lg"><DialogTitle>{editing === "new" ? "Registrar gasto" : "Editar gasto"}</DialogTitle><DialogDescription>Un nuevo cuidado en el historial de tu mascota.</DialogDescription><form className="grid gap-4" noValidate onSubmit={async e => { e.preventDefault(); const parsed = expenseSchema.safeParse(form); if (!parsed.success) { setErrors(Object.fromEntries(parsed.error.issues.map(i => [i.path[0], i.message]))); return; } setBusy(true); try { await save({ data: { ...parsed.data, id: editing && editing !== "new" ? editing.id : undefined } }); await cache.invalidateQueries({ queryKey: key }); setEditing(null); toast.success("Gasto guardado"); } catch { toast.error("No se pudo guardar el gasto."); } finally { setBusy(false); } }}>
+      <Field label="Descripción del gasto" maxLength={120} required value={form.description} error={errors.description} onChange={e => update("description", e.target.value)} />
+      <label className="grid gap-1.5 text-sm font-semibold">Categoría<select className={fieldClass} value={form.category} onChange={e => update("category", expenseSchema.shape.category.parse(e.target.value))}>{categories.map(c => <option key={c}>{c}</option>)}</select></label>
+      <label className="grid gap-1.5 text-sm font-semibold">Mascota<select className={fieldClass} value={form.pet_id} onChange={e => update("pet_id", expenseSchema.shape.pet_id.parse(e.target.value))}>{pets.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}</select></label>
+      <div className="grid gap-4 sm:grid-cols-2"><Field label="Valor (COP)" type="number" min="0.01" max="999999999999.99" step="0.01" required value={form.amount || ""} error={errors.amount} onChange={e => update("amount", Number(e.target.value))} /><Field label="Fecha" type="date" required value={form.date} error={errors.date} onChange={e => update("date", e.target.value)} /></div>
+      <label className="grid gap-1.5 text-sm font-semibold">Observaciones (opcional)<textarea className={fieldClass} rows={3} maxLength={1000} value={form.notes} onChange={e => update("notes", e.target.value)} /></label>
+      <div className="flex justify-end gap-2"><Button type="button" variant="outline" disabled={busy} onClick={() => setEditing(null)}>Cancelar</Button><Button type="submit" disabled={busy}>{busy ? "Guardando…" : "Guardar gasto"}</Button></div>
+    </form></DialogContent></Dialog>
+    {deleting && <DeleteDialog name={deleting.description} busy={busy} onCancel={() => setDeleting(null)} onConfirm={async () => { setBusy(true); try { await remove({ data: { id: deleting.id } }); await cache.invalidateQueries({ queryKey: key }); setDeleting(null); toast.success("Gasto eliminado"); } catch { toast.error("No se pudo eliminar el gasto."); } finally { setBusy(false); } }} />}
+  </>;
+}
