@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeft, Heart, Images, MapPin } from "lucide-react";
-import { PageHeader, Pill_, SectionCard } from "@/components/petcare/ui";
+import { Pill_, SectionCard } from "@/components/petcare/ui";
 import { RecordsGate } from "@/components/petcare/record-ui";
 import { ExperienciasNav } from "@/components/petcare/ExperienciasNav";
 import { useAccount } from "@/components/petcare/AccountProvider";
