@@ -7,3 +7,6 @@
 - [x] Integrar acceso y cuenta sin cambiar las secciones existentes.
 - [x] Verificar validación, cálculos y páginas públicas en computador y celular.
 - [ ] Verificar guardado, edición, eliminación y vistas privadas: pendiente de una cuenta registrada e inicio de sesión.
+- [ ] Integrar registro real de cuidados y recompensas únicas y privadas.
+- [ ] Crear niveles, insignias, rachas y panel general y por mascota.
+- [ ] Verificar reglas, navegación y presentación; comprobar guardado si existe una cuenta disponible.
