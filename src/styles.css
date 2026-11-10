@@ -187,6 +187,13 @@
 .care-palette .card-soft > div { min-width: 0; }
 .care-palette .card-soft .font-display { font-size: 1.25rem; overflow-wrap: anywhere; }
 @media (prefers-reduced-motion: reduce) { .care-palette * { animation: none; transition: none; } }
+/* Sidebar keeps its own scroll so the logo and "Añadir mascota" stay put. */
+.sidebar-scroll { scrollbar-width: thin; scrollbar-color: var(--sidebar-border) transparent; }
+.sidebar-scroll::-webkit-scrollbar { width: 8px; }
+.sidebar-scroll::-webkit-scrollbar-thumb { background: var(--sidebar-border); border-radius: 999px; }
+.sidebar-scroll::-webkit-scrollbar-thumb:hover { background: var(--muted-foreground); }
+.sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+
 .care-palette progress { accent-color: var(--primary); border-radius: 999px; overflow: hidden; }
 .care-palette progress::-webkit-progress-bar { background: var(--secondary); }
 .care-palette progress::-webkit-progress-value { background: var(--primary); }

@@ -26,7 +26,8 @@ export function AppShell({ children }: { children: ReactNode }) {
           <span className="grid size-10 place-items-center rounded-2xl bg-gradient-warm text-primary-foreground"><PawPrint className="size-5" /></span>
           <span className="font-display text-2xl font-semibold">PetCare</span>
         </Link>
-        <nav aria-label="Principal" className="space-y-1">
+        <div className="sidebar-scroll -mr-2 min-h-0 flex-1 overflow-y-auto overscroll-contain pr-2">
+          <nav aria-label="Principal" className="space-y-1">
           {nav.map((n) => (
             <Link key={n.to} to={n.to} className={linkCls} activeProps={{ className: activeCls }} activeOptions={{ exact: n.to === "/" }}>
               <n.icon className="size-5" />{n.label}
